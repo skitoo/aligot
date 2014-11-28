@@ -1,0 +1,6 @@
+*.pyc
+*.pyo
+*.sublime-project
+*.sublime-workspace
+*.sqlite3
+.DS_Store

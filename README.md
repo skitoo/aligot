@@ -1,0 +1,3 @@
+# Aligot
+
+Notes management
