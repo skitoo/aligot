@@ -88,3 +88,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
 )
+
+# Auth
+
+AUTH_USER_MODEL = 'aligot.User'
