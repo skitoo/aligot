@@ -6,6 +6,6 @@ from django.conf import settings
 
 urlpatterns = patterns(
     '',
-    url(r'^$', 'aligot.views.index', name='index'),
+    url(r'^$', 'aligot.views.html.index', name='index'),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
