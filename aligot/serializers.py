@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from rest_framework import serializers
-from .models import Note, NoteBook
+from .models import Note, NoteBook, NoteRevision
 
 
 class NoteBookSerializer(serializers.ModelSerializer):
@@ -12,3 +12,8 @@ class NoteBookSerializer(serializers.ModelSerializer):
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
+
+
+class NoteRevisionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = NoteRevision
