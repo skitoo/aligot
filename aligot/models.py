@@ -10,16 +10,20 @@ class User(AbstractUser):
 
 class NoteBook(models.Model):
     title = models.CharField(max_length=255)
-    owner = models.ForeignKey(User, related_name='notebooks')
-    create_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, related_name='notebooks')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Note(models.Model):
     title = models.CharField(max_length=255)
-    content = models.TextField(blank=True, null=True)
-    parent = models.ForeignKey('self', related_name='children', null=True)
-    owner = models.ForeignKey(User, related_name='notes')
     starred = models.BooleanField(default=False)
-    removed = models.BooleanField(default=False)
-    create_at = models.DateTimeField(auto_now_add=True)
-    create_by = models.ForeignKey(User)
+    crypted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, related_name='notes')
+
+
+class NoteRevision(models.Model):
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User)
+    note = models.ForeignKey(Note, related_name='revisions')
