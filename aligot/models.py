@@ -20,6 +20,7 @@ class Note(models.Model):
     crypted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, related_name='notes')
+    notebook = models.ForeignKey(NoteBook, related_name='notes')
 
 
 class NoteRevision(models.Model):
