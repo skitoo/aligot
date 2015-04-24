@@ -4,3 +4,4 @@
 *.sublime-workspace
 *.sqlite3
 .DS_Store
+__pychache__/
