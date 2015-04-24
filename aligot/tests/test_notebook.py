@@ -19,7 +19,7 @@ class TestNoteBookApi(TestCase):
         self.url = reverse('notebook-list')
 
     def test_create_without_params(self):
-        self.assertEquals(400, self.client.post(self.url).status_code)
+        self.assertEquals(status.HTTP_400_BAD_REQUEST, self.client.post(self.url).status_code)
         self.assertEquals(0, NoteBook.objects.count())
 
     def test_create(self):
