@@ -34,3 +34,10 @@ class TestNoteBookApi(TestCase):
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals(1, NoteBook.objects.count())
         self.assertEquals('new title', NoteBook.objects.all()[0].title)
+
+    def test_delete(self):
+        notebook = NoteBook.objects.create(title='a title', created_by=self.user)
+        self.assertEquals(1, NoteBook.objects.count())
+        response = self.client.delete(reverse('notebook-detail', args=[notebook.id]))
+        self.assertEquals(status.HTTP_204_NO_CONTENT, response.status_code, response.content)
+        self.assertEquals(0, NoteBook.objects.count())
