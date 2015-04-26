@@ -81,3 +81,8 @@ class TestNoteBookApiWithDifferentUser(TestCase):
         self.assertEquals(2, len(response.data))
         self.assertEquals('notebook 1', response.data[0]['title'])
         self.assertEquals('notebook 2', response.data[1]['title'])
+
+    def test_get(self):
+        notebook = NoteBook.objects.create(title='notebook 1', created_by=self.user2)
+        response = self.client.get(reverse('notebook-detail', args=[notebook.id]))
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
