@@ -48,3 +48,12 @@ class TestNoteBookApi(TestCase):
         response = self.client.get(reverse('notebook-detail', args=[notebook.id]))
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals('a title', response.data['title'], response.data)
+
+    def test_get_all(self):
+        nb1 = NoteBook.objects.create(title='notebook 1', created_by=self.user)
+        nb2 = NoteBook.objects.create(title='notebook 2', created_by=self.user)
+        response = self.client.get(reverse('notebook-list'))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals('notebook 1', response.data[0]['title'])
+        self.assertEquals('notebook 2', response.data[1]['title'])
