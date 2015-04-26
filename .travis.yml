@@ -16,4 +16,5 @@ script: python manage.py test
 
 
 after_success:
+  - coverage run --source='.' manage.py test
   - coveralls
