@@ -5,3 +5,4 @@
 *.sqlite3
 .DS_Store
 __pychache__/
+.coverage
