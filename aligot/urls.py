@@ -16,7 +16,7 @@ urlpatterns = patterns(
     url(r'^api/notebooks/$', api.NoteBookList.as_view(), name='notebook-list'),
     url(r'^api/notebook/(?P<pk>[0-9]+)/$', api.NoteBookDetail.as_view(), name='notebook-detail'),
     url(r'^api/notebook/(?P<notebook>[0-9]+)/notes/$', api.NoteList.as_view(), name='notebook-notelist'),
-    url(r'^api/notes/$', api.NoteList.as_view()),
-    url(r'^api/note/(?P<pk>[0-9]+)/$', api.NoteDetail.as_view()),
+    url(r'^api/notes/$', api.NoteList.as_view(), name='note-list'),
+    url(r'^api/note/(?P<pk>[0-9]+)/$', api.NoteDetail.as_view(), name='note-detail'),
 
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

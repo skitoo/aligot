@@ -10,9 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class NoteBookSerializer(serializers.HyperlinkedModelSerializer):
-    # notes = serializers.HyperlinkedIdentityField(view_name='notes')
-    # notes = serializers.HyperlinkedIdentityField(view_name='notebook-notelist')
-
     class Meta:
         model = NoteBook
 
