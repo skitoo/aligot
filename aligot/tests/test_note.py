@@ -26,3 +26,14 @@ class TestNoteApi(TestCase):
         )
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, NoteBook.objects.count())
+
+    def test_update(self):
+        note = Note.objects.create(title='a title', created_by=self.user, notebook=self.notebook)
+        self.assertEquals(1, Note.objects.count())
+        response = self.client.put(
+            reverse('note-detail', args=[note.id]),
+            {'title': 'new title', 'created_by': self.user.id, 'notebook': self.notebook.id}
+        )
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(1, Note.objects.count())
+        self.assertEquals('new title', Note.objects.all()[0].title)
