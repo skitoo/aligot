@@ -13,6 +13,7 @@ class TestNoteApi(TestCase):
         self.client = APIClient()
         self.user = User.objects.create(username='user', password='pass')
         self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
+        self.notebook2 = NoteBook.objects.create(title='a title 2', created_by=self.user)
         self.client.force_authenticate(user=self.user)
 
     def test_create_without_params(self):
@@ -25,7 +26,7 @@ class TestNoteApi(TestCase):
             {'title': 'a title for note', 'created_by': self.user.id, 'notebook': self.notebook.id}
         )
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
-        self.assertEquals(1, NoteBook.objects.count())
+        self.assertEquals(1, Note.objects.count())
 
     def test_update(self):
         note = Note.objects.create(title='a title for note', created_by=self.user, notebook=self.notebook)
@@ -60,3 +61,19 @@ class TestNoteApi(TestCase):
         self.assertEquals(2, len(response.data))
         self.assertEquals('note 1', response.data[0]['title'])
         self.assertEquals('note 2', response.data[1]['title'])
+
+    def test_get_all_of_notebook(self):
+        Note.objects.create(title='note 1', created_by=self.user, notebook=self.notebook)
+        Note.objects.create(title='note 2', created_by=self.user, notebook=self.notebook)
+        Note.objects.create(title='note 3', created_by=self.user, notebook=self.notebook2)
+        Note.objects.create(title='note 4', created_by=self.user, notebook=self.notebook2)
+        response = self.client.get(reverse('notebook-notelist', args=[self.notebook.id]))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals('note 1', response.data[0]['title'])
+        self.assertEquals('note 2', response.data[1]['title'])
+        response = self.client.get(reverse('notebook-notelist', args=[self.notebook2.id]))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals('note 3', response.data[0]['title'])
+        self.assertEquals('note 4', response.data[1]['title'])
