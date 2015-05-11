@@ -1,11 +1,13 @@
 # coding: utf-8
 
-from django.test import TestCase
-from django.core.urlresolvers import reverse
-from rest_framework.test import APIClient
-from rest_framework import status
-from ..models import NoteBook, User
 import logging
+
+from django.core.urlresolvers import reverse
+from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APIClient
+
+from ..models import NoteBook, User
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -35,6 +37,17 @@ class TestNoteBookApi(TestCase):
         response = self.client.put(
             reverse('notebook-detail', args=[notebook.id]),
             {'title': 'new title', 'created_by': reverse('user-detail', args=[self.user.id])}
+        )
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(1, NoteBook.objects.count())
+        self.assertEquals('new title', NoteBook.objects.all()[0].title)
+
+    def test_patch(self):
+        notebook = NoteBook.objects.create(title='a title', created_by=self.user)
+        self.assertEquals(1, NoteBook.objects.count())
+        response = self.client.patch(
+            reverse('notebook-detail', args=[notebook.id]),
+            {'title': 'new title'}
         )
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals(1, NoteBook.objects.count())
@@ -97,5 +110,13 @@ class TestNoteBookApiWithDifferentUser(TestCase):
         response = self.client.put(
             reverse('notebook-detail', args=[notebook.id]),
             {'title': 'new title', 'created_by': reverse('user-detail', args=[self.user1.id])}
+        )
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_patch(self):
+        notebook = NoteBook.objects.create(title='notebook 1', created_by=self.user2)
+        response = self.client.patch(
+            reverse('notebook-detail', args=[notebook.id]),
+            {'title': 'new title'}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
