@@ -126,3 +126,11 @@ class TestNoteApiWithDifferentUser(TestCase):
             {'title': 'new title', 'created_by': self.user2.id, 'notebook': self.notebook2.id}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_patch(self):
+        note = Note.objects.create(title='note 1', created_by=self.user2, notebook=self.notebook2)
+        response = self.client.patch(
+            reverse('note-detail', args=[note.id]),
+            {'title': 'new title'}
+        )
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
