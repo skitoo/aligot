@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class User(AbstractUser):
@@ -26,5 +26,5 @@ class Note(models.Model):
 class NoteRevision(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, related_name='notes')
     note = models.ForeignKey(Note, related_name='revisions')

@@ -26,7 +26,7 @@ class TestNoteBookApi(TestCase):
     def test_create(self):
         response = self.client.post(
             reverse('notebook-list'),
-            {'title': 'a title', 'created_by': reverse('user-detail', args=[self.user.id])}
+            {'title': 'a title', 'created_by': self.user.id}
         )
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, NoteBook.objects.count())
@@ -36,7 +36,7 @@ class TestNoteBookApi(TestCase):
         self.assertEquals(1, NoteBook.objects.count())
         response = self.client.put(
             reverse('notebook-detail', args=[notebook.id]),
-            {'title': 'new title', 'created_by': reverse('user-detail', args=[self.user.id])}
+            {'title': 'new title', 'created_by': self.user.id}
         )
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals(1, NoteBook.objects.count())
