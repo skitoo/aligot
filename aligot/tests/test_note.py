@@ -113,11 +113,11 @@ class TestNoteApiWithDifferentUser(TestCase):
         note = Note.objects.create(title='note 1', created_by=self.user2, notebook=self.notebook2)
         response = self.client.get(reverse('note-detail', args=[note.id]))
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
-    #
-    # def test_delete(self):
-    #     notebook = NoteBook.objects.create(title='notebook 1', created_by=self.user2)
-    #     response = self.client.delete(reverse('notebook-detail', args=[notebook.id]))
-    #     self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_delete(self):
+        note = Note.objects.create(title='note 1', created_by=self.user2, notebook=self.notebook2)
+        response = self.client.get(reverse('note-detail', args=[note.id]))
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
     #
     # def test_update(self):
     #     notebook = NoteBook.objects.create(title='notebook 1', created_by=self.user2)
