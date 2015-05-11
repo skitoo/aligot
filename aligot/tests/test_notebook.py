@@ -109,7 +109,7 @@ class TestNoteBookApiWithDifferentUser(TestCase):
         notebook = NoteBook.objects.create(title='notebook 1', created_by=self.user2)
         response = self.client.put(
             reverse('notebook-detail', args=[notebook.id]),
-            {'title': 'new title', 'created_by': reverse('user-detail', args=[self.user1.id])}
+            {'title': 'new title', 'created_by': self.user1.id}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
 
