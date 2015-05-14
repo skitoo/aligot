@@ -28,6 +28,13 @@ class TestNoteApi(TestCase):
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, Note.objects.count())
 
+    def test_create_without_notebook(self):
+        response = self.client.post(
+            reverse('note-list'),
+            {'title': 'a title for note', 'created_by': self.user.id}
+        )
+        self.assertEquals(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
+
     def test_update(self):
         note = Note.objects.create(title='a title for note', created_by=self.user, notebook=self.notebook)
         self.assertEquals(1, Note.objects.count())
@@ -112,6 +119,13 @@ class TestNoteApiWithDifferentUser(TestCase):
     def test_get(self):
         note = Note.objects.create(title='note 1', created_by=self.user2, notebook=self.notebook2)
         response = self.client.get(reverse('note-detail', args=[note.id]))
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_create(self):
+        response = self.client.post(
+            reverse('note-list'),
+            {'title': 'a title for note', 'created_by': self.user1.id, 'notebook': self.notebook2.id}
+        )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
 
     def test_delete(self):
