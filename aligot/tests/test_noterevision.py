@@ -91,3 +91,25 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(2, len(response.data))
         self.assertEquals(rev3.content, response.data[0]['content'])
         self.assertEquals(rev4.content, response.data[1]['content'])
+
+
+class TestNoteRevisionApiWithDifferentUser(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user1 = User.objects.create(username='user1', password='pass')
+        self.user2 = User.objects.create(username='user2', password='pass')
+        self.notebook1 = NoteBook.objects.create(title='a title', created_by=self.user1)
+        self.notebook2 = NoteBook.objects.create(title='a title', created_by=self.user2)
+        self.note1 = Note.objects.create(title='a title for note', created_by=self.user1, notebook=self.notebook1)
+        self.note2 = Note.objects.create(title='a title for note2', created_by=self.user2, notebook=self.notebook2)
+        self.client.force_authenticate(user=self.user1)
+
+    def test_get_all(self):
+        rev1 = NoteRevision.objects.create(content='a content for note', created_by=self.user1, note=self.note1)
+        rev2 = NoteRevision.objects.create(content='a content for note. Yep.', created_by=self.user1, note=self.note1)
+        NoteRevision.objects.create(content='a content for note. Foo', created_by=self.user2, note=self.note2)
+        response = self.client.get(reverse('revision-list'))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals(rev1.content, response.data[0]['content'])
+        self.assertEquals(rev2.content, response.data[1]['content'])
