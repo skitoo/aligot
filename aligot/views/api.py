@@ -42,6 +42,6 @@ class NoteList(generics.ListCreateAPIView):
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner,)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteBookOwner,)
     queryset = Note.objects.all()
     serializer_class = NoteSerializer

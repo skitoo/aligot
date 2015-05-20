@@ -16,6 +16,9 @@ class IsOwner(permissions.BasePermission):
 
 
 class IsNoteBookOwner(permissions.BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return obj.notebook.created_by == request.user
+
     def has_permission(self, request, view):
         notebook_id = request.data.get('notebook')
         if notebook_id:
