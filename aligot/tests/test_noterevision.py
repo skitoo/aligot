@@ -36,7 +36,7 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
 
     def test_update(self):
-        revision = NoteRevision.objects.create(content='a title for note', created_by=self.user, note=self.note)
+        revision = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
         response = self.client.put(
             reverse('revision-detail', args=[revision.id]),
             {'content': 'new content', 'note': self.note.id}
@@ -45,10 +45,16 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(revision.content, NoteRevision.objects.all()[0].content)
 
     def test_patch(self):
-        revision = NoteRevision.objects.create(content='a title for note', created_by=self.user, note=self.note)
+        revision = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
         response = self.client.put(
             reverse('revision-detail', args=[revision.id]),
             {'content': 'new content'}
         )
         self.assertEquals(status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code, response.content)
         self.assertEquals(revision.content, NoteRevision.objects.all()[0].content)
+
+    def test_delete(self):
+        revision = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
+        response = self.client.delete(reverse('revision-detail', args=[revision.id]))
+        self.assertEquals(status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code, response.content)
+        self.assertEquals(1, NoteRevision.objects.count())
