@@ -21,10 +21,10 @@ class NoteBookSerializer(serializers.ModelSerializer):
 
 
 class NoteSerializer(serializers.ModelSerializer):
-    # created_by = serializers.SlugRelatedField(
-    #     slug_field='username',
-    #     read_only=True
-    # )
+    created_by = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True
+    )
 
     class Meta:
         model = Note

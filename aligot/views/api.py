@@ -38,6 +38,9 @@ class NoteList(generics.ListCreateAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteBookOwner,)
     serializer_class = NoteSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
     def get_queryset(self):
         query = Note.objects.filter(created_by=self.request.user)
         notebook = self.kwargs.get('notebook')

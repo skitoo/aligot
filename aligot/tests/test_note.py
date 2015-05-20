@@ -23,15 +23,16 @@ class TestNoteApi(TestCase):
     def test_create(self):
         response = self.client.post(
             reverse('note-list'),
-            {'title': 'a title for note', 'created_by': self.user.id, 'notebook': self.notebook.id}
+            {'title': 'a title for note', 'notebook': self.notebook.id}
         )
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, Note.objects.count())
+        self.assertEquals(self.user.username, Note.objects.get(pk=1).created_by.username)
 
     def test_create_without_notebook(self):
         response = self.client.post(
             reverse('note-list'),
-            {'title': 'a title for note', 'created_by': self.user.id}
+            {'title': 'a title for note'}
         )
         self.assertEquals(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
 
@@ -40,11 +41,12 @@ class TestNoteApi(TestCase):
         self.assertEquals(1, Note.objects.count())
         response = self.client.put(
             reverse('note-detail', args=[note.id]),
-            {'title': 'new title', 'created_by': self.user.id, 'notebook': self.notebook.id}
+            {'title': 'new title', 'notebook': self.notebook.id}
         )
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals(1, Note.objects.count())
         self.assertEquals('new title', Note.objects.all()[0].title)
+        self.assertEquals(self.user.username, Note.objects.get(pk=1).created_by.username)
 
     def test_patch(self):
         note = Note.objects.create(title='a title for note', created_by=self.user, notebook=self.notebook)
@@ -70,6 +72,7 @@ class TestNoteApi(TestCase):
         response = self.client.get(reverse('note-detail', args=[note.id]))
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals('a title for note', response.data['title'], response.data)
+        self.assertEquals(self.user.username, response.data['created_by'], response.data)
 
     def test_get_all(self):
         Note.objects.create(title='note 1', created_by=self.user, notebook=self.notebook)
@@ -124,7 +127,7 @@ class TestNoteApiWithDifferentUser(TestCase):
     def test_create(self):
         response = self.client.post(
             reverse('note-list'),
-            {'title': 'a title for note', 'created_by': self.user1.id, 'notebook': self.notebook2.id}
+            {'title': 'a title for note', 'notebook': self.notebook2.id}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
 
@@ -137,7 +140,7 @@ class TestNoteApiWithDifferentUser(TestCase):
         note = Note.objects.create(title='note 1', created_by=self.user2, notebook=self.notebook2)
         response = self.client.put(
             reverse('note-detail', args=[note.id]),
-            {'title': 'new title', 'created_by': self.user2.id, 'notebook': self.notebook2.id}
+            {'title': 'new title', 'notebook': self.notebook2.id}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
 
@@ -145,7 +148,7 @@ class TestNoteApiWithDifferentUser(TestCase):
         note = Note.objects.create(title='note 1', created_by=self.user1, notebook=self.notebook)
         response = self.client.put(
             reverse('note-detail', args=[note.id]),
-            {'title': 'new title', 'created_by': self.user1.id, 'notebook': self.notebook2.id}
+            {'title': 'new title', 'notebook': self.notebook2.id}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
 
