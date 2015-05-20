@@ -118,3 +118,10 @@ class TestNoteRevisionApiWithDifferentUser(TestCase):
         rev = NoteRevision.objects.create(content='a content for note', created_by=self.user2, note=self.note2)
         response = self.client.get(reverse('revision-detail', args=[rev.id]))
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_create(self):
+        response = self.client.post(
+            reverse('revision-list'),
+            {'content': 'a content for note', 'note': self.note2.id}
+        )
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
