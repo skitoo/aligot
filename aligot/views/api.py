@@ -4,9 +4,10 @@ import logging
 
 from rest_framework import generics, permissions
 
-from ..models import Note, NoteBook, User
-from ..permissions import IsNoteBookOwner, IsOwner
-from ..serializers import NoteBookSerializer, NoteSerializer, UserSerializer
+from ..models import Note, NoteBook, NoteRevision, User
+from ..permissions import IsNoteBookOwner, IsNoteOwner, IsOwner
+from ..serializers import (NoteBookSerializer, NoteRevisionSerializer,
+                           NoteSerializer, UserSerializer)
 
 logger = logging.getLogger(__name__)
 
@@ -51,3 +52,16 @@ class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteBookOwner,)
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
+
+
+class NoteRevisionList(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteOwner,)
+    serializer_class = NoteRevisionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_queryset(self):
+        query = NoteRevision.objects.filter(created_by=self.request.user)
+        note = self.kwargs.get('note')
+        return query.filter(note=note) if note else query
