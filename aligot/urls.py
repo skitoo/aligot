@@ -17,6 +17,7 @@ urlpatterns = patterns(
     url(r'^api/notebook/(?P<notebook>[0-9]+)/notes/$', api.NoteList.as_view(), name='notebook-notelist'),
     url(r'^api/notes/$', api.NoteList.as_view(), name='note-list'),
     url(r'^api/note/(?P<pk>[0-9]+)/$', api.NoteDetail.as_view(), name='note-detail'),
+    url(r'^api/note/(?P<note>[0-9]+)/revisions/$', api.NoteRevisionList.as_view(), name='note-revisionlist'),
     url(r'^api/revisions/$', api.NoteRevisionList.as_view(), name='revision-list'),
     url(r'^api/revision/(?P<pk>[0-9]+)/$', api.NoteRevisionDetail.as_view(), name='revision-detail'),
 

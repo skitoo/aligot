@@ -13,6 +13,7 @@ class TestNoteRevisionAPI(TestCase):
         self.user = User.objects.create(username='user', password='pass')
         self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
         self.note = Note.objects.create(title='a title for note', created_by=self.user, notebook=self.notebook)
+        self.note2 = Note.objects.create(title='a title for note2', created_by=self.user, notebook=self.notebook)
         self.client.force_authenticate(user=self.user)
 
     def test_create_without_params(self):
@@ -74,3 +75,19 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(2, len(response.data))
         self.assertEquals(rev1.content, response.data[0]['content'])
         self.assertEquals(rev2.content, response.data[1]['content'])
+
+    def test_get_all_of_note(self):
+        rev1 = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
+        rev2 = NoteRevision.objects.create(content='a content for note. Yep.', created_by=self.user, note=self.note)
+        rev3 = NoteRevision.objects.create(content='a content for note. Foo', created_by=self.user, note=self.note2)
+        rev4 = NoteRevision.objects.create(content='a content for note. FooFoo.', created_by=self.user, note=self.note2)
+        response = self.client.get(reverse('note-revisionlist', args=[self.note.id]))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals(rev1.content, response.data[0]['content'])
+        self.assertEquals(rev2.content, response.data[1]['content'])
+        response = self.client.get(reverse('note-revisionlist', args=[self.note2.id]))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals(rev3.content, response.data[0]['content'])
+        self.assertEquals(rev4.content, response.data[1]['content'])
