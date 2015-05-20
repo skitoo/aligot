@@ -15,7 +15,6 @@ class NoteBookSerializer(serializers.ModelSerializer):
         slug_field='username',
         read_only=True
     )
-    # created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = NoteBook
