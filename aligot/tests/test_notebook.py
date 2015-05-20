@@ -1,16 +1,11 @@
 # coding: utf-8
 
-import logging
-
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from ..models import NoteBook, User
-
-# Get an instance of a logger
-logger = logging.getLogger(__name__)
 
 
 class TestNoteBookApi(TestCase):
