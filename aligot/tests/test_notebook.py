@@ -81,7 +81,6 @@ class TestNoteBookApiWithDifferentUser(TestCase):
         self.user1 = User.objects.create(username='user1', password='pass')
         self.user2 = User.objects.create(username='user2', password='pass')
         self.client.force_authenticate(user=self.user1)
-        self.url = reverse('notebook-list')
 
     def test_get_all(self):
         NoteBook.objects.create(title='notebook 1', created_by=self.user1)
