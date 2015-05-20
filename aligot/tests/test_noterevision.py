@@ -65,3 +65,12 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals(revision.content, response.data['content'], response.data)
         self.assertEquals(self.user.username, response.data['created_by'], response.data)
+
+    def test_get_all(self):
+        rev1 = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
+        rev2 = NoteRevision.objects.create(content='a content for note. Yep.', created_by=self.user, note=self.note)
+        response = self.client.get(reverse('revision-list'))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(2, len(response.data))
+        self.assertEquals(rev1.content, response.data[0]['content'])
+        self.assertEquals(rev2.content, response.data[1]['content'])
