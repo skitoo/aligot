@@ -27,3 +27,10 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, NoteRevision.objects.count())
         self.assertEquals(self.user.username, NoteRevision.objects.get(pk=1).created_by.username)
+
+    def test_create_without_note(self):
+        response = self.client.post(
+            reverse('revision-list'),
+            {'content': 'a content for note'}
+        )
+        self.assertEquals(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
