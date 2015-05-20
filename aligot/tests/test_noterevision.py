@@ -58,3 +58,10 @@ class TestNoteRevisionAPI(TestCase):
         response = self.client.delete(reverse('revision-detail', args=[revision.id]))
         self.assertEquals(status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code, response.content)
         self.assertEquals(1, NoteRevision.objects.count())
+
+    def test_get(self):
+        revision = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
+        response = self.client.get(reverse('revision-detail', args=[revision.id]))
+        self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
+        self.assertEquals(revision.content, response.data['content'], response.data)
+        self.assertEquals(self.user.username, response.data['created_by'], response.data)
