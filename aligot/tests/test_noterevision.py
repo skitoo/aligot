@@ -34,3 +34,12 @@ class TestNoteRevisionAPI(TestCase):
             {'content': 'a content for note'}
         )
         self.assertEquals(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
+
+    def test_update(self):
+        revision = NoteRevision.objects.create(content='a title for note', created_by=self.user, note=self.note)
+        response = self.client.put(
+            reverse('revision-detail', args=[revision.id]),
+            {'content': 'new content', 'note': self.note.id}
+        )
+        self.assertEquals(status.HTTP_405_METHOD_NOT_ALLOWED, response.status_code, response.content)
+        self.assertEquals(revision.content, NoteRevision.objects.all()[0].content)

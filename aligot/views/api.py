@@ -65,3 +65,9 @@ class NoteRevisionList(generics.ListCreateAPIView):
         query = NoteRevision.objects.filter(created_by=self.request.user)
         note = self.kwargs.get('note')
         return query.filter(note=note) if note else query
+
+
+class NoteRevisionDetail(generics.RetrieveAPIView):
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteOwner,)
+    queryset = NoteRevision.objects.all()
+    serializer_class = NoteRevisionSerializer
