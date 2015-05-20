@@ -11,6 +11,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class NoteBookSerializer(serializers.ModelSerializer):
+    created_by = serializers.SlugRelatedField(
+        slug_field='username',
+        read_only=True
+    )
+    # created_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = NoteBook
 

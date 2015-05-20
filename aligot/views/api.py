@@ -24,11 +24,27 @@ class NoteBookList(generics.ListCreateAPIView):
     def get_queryset(self):
         return NoteBook.objects.filter(created_by=self.request.user)
 
+    def perform_create(self, serializer):
+        logger.debug('perform_create')
+        serializer.save(created_by=self.request.user)
+
+    def perform_update(self, serializer):
+        logger.debug('perform_update')
+        assert False
+        serializer.save(created_by=self.request.user)
+
 
 class NoteBookDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner,)
     queryset = NoteBook.objects.all()
     serializer_class = NoteBookSerializer
+
+    def perform_create(self, serializer):
+        logger.debug('perform_create')
+        serializer.save(created_by=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(created_by=self.request.user)
 
 
 class NoteList(generics.ListCreateAPIView):
