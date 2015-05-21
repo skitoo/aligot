@@ -26,5 +26,5 @@ class Note(models.Model):
 class NoteRevision(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, related_name='notes')
+    created_by = models.ForeignKey(User)
     note = models.ForeignKey(Note, related_name='revisions')
