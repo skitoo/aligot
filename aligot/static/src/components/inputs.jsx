@@ -28,3 +28,17 @@ export class Password extends React.Component {
         );
     }
 }
+
+export class Email extends React.Component {
+    render() {
+        return (
+            <div className="field">
+                <label>Email</label>
+                <div className="ui icon input">
+                    <input type="email" name="email" placeholder="Email" />
+                    <i className="mail icon"></i>
+                </div>
+            </div>
+        );
+    }
+}

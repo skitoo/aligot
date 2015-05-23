@@ -13,7 +13,7 @@ export default class LoginView extends React.Component {
                         <Login />
                         <Password />
                         <Button label="Connexion" color="primary" />
-                        <Link to="register">S'enregistrer</Link>
+                        Pas de compte ? <Link to="register">S'enregistrer</Link>
                     </form>
                 </div>
             </div>
