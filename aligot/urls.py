@@ -8,7 +8,12 @@ from .views import api
 urlpatterns = patterns(
     '',
     url(r'^$', 'aligot.views.html.index', name='index'),
+    url(r'^login$', 'aligot.views.html.index', name='login'),
+    url(r'^register$', 'aligot.views.html.index', name='register'),
+
+
     url(r'^admin/', include(admin.site.urls)),
+
 
     url(r'^api/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/user/(?P<pk>[0-9]+)/$', api.UserDetail.as_view(), name='user-detail'),
