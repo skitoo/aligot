@@ -58,6 +58,7 @@
     "react": "^0.13.3",
     "react-router": "^0.13.3",
     "require-dot-file": "^0.4.0",
-    "semantic-ui": "^1.12.3"
+    "semantic-ui": "^1.12.3",
+    "superagent": "^1.2.0"
   }
 }
