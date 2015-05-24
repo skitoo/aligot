@@ -117,3 +117,45 @@ class TestNoteBookApiWithDifferentUser(TestCase):
             {'title': 'new title'}
         )
         self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+
+class TestNotebookWithoutUserAuthentified(TestCase):
+    """
+    Test the API in case of no users authentified
+    """
+
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create(username='user', password='pass')
+
+    def test_get_all(self):
+        NoteBook.objects.create(title='notebook 1', created_by=self.user)
+        NoteBook.objects.create(title='notebook 2', created_by=self.user)
+        response = self.client.get(reverse('notebook-list'))
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_get(self):
+        notebook = NoteBook.objects.create(title='notebook', created_by=self.user)
+        response = self.client.get(reverse('notebook-detail', args=[notebook.id]))
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_delete(self):
+        notebook = NoteBook.objects.create(title='notebook', created_by=self.user)
+        response = self.client.delete(reverse('notebook-detail', args=[notebook.id]))
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_update(self):
+        notebook = NoteBook.objects.create(title='notebook', created_by=self.user)
+        response = self.client.put(
+            reverse('notebook-detail', args=[notebook.id]),
+            {'title': 'new title'}
+        )
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
+
+    def test_patch(self):
+        notebook = NoteBook.objects.create(title='notebook', created_by=self.user)
+        response = self.client.patch(
+            reverse('notebook-detail', args=[notebook.id]),
+            {'title': 'new title'}
+        )
+        self.assertEquals(status.HTTP_403_FORBIDDEN, response.status_code, response.content)
