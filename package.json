@@ -28,6 +28,7 @@
     "webpack-dev-server": "^1.8.2"
   },
   "dependencies": {
+    "babel-runtime": "^5.4.7",
     "better-console": "^0.2.4",
     "del": "^1.2.0",
     "extend": "^2.0.1",
