@@ -12,7 +12,11 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
                 include: path.join(__dirname, 'aligot/static/src'),
-                loaders: ['react-hot', 'babel']
+                loader: 'babel',
+                query: {
+                    optional: ['runtime'],
+                    stage: 1
+                }
             }
         ]
     },
