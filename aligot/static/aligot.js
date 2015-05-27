@@ -1559,6 +1559,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _componentsSidebar = __webpack_require__(/*! ../components/sidebar */ 290);
+	
+	var _componentsSidebar2 = _interopRequireDefault(_componentsSidebar);
+	
 	var LoginView = (function (_React$Component) {
 	    function LoginView() {
 	        _classCallCheck(this, LoginView);
@@ -1576,25 +1580,18 @@
 	            this.props.flux.getActions('auth').logout();
 	        }
 	    }, {
+	        key: 'handleNotes',
+	        value: function handleNotes(event) {}
+	    }, {
+	        key: 'handleBlockNotes',
+	        value: function handleBlockNotes(event) {}
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2['default'].createElement(
 	                'div',
 	                null,
-	                _react2['default'].createElement(
-	                    'div',
-	                    { className: 'row' },
-	                    _react2['default'].createElement(
-	                        'div',
-	                        { className: 'column' },
-	                        'IndexView',
-	                        _react2['default'].createElement(
-	                            'button',
-	                            { className: 'ui button', onClick: this.handleLogout.bind(this) },
-	                            'Déconnexion'
-	                        )
-	                    )
-	                )
+	                _react2['default'].createElement(_componentsSidebar2['default'], { flux: this.props.flux })
 	            );
 	        }
 	    }]);
@@ -32123,6 +32120,89 @@
 	module.exports = toArray;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/node-libs-browser/~/process/browser.js */ 55)))
+
+/***/ },
+/* 290 */
+/*!**************************************************!*\
+  !*** ./aligot/static/src/components/sidebar.jsx ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _inherits = __webpack_require__(/*! babel-runtime/helpers/inherits */ 8)['default'];
+	
+	var _createClass = __webpack_require__(/*! babel-runtime/helpers/create-class */ 9)['default'];
+	
+	var _classCallCheck = __webpack_require__(/*! babel-runtime/helpers/class-call-check */ 10)['default'];
+	
+	var _Object$defineProperty = __webpack_require__(/*! babel-runtime/core-js/object/define-property */ 22)['default'];
+	
+	var _interopRequireDefault = __webpack_require__(/*! babel-runtime/helpers/interop-require-default */ 5)['default'];
+	
+	_Object$defineProperty(exports, '__esModule', {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(/*! react */ 6);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var Sidebar = (function (_React$Component) {
+	    function Sidebar() {
+	        _classCallCheck(this, Sidebar);
+	
+	        if (_React$Component != null) {
+	            _React$Component.apply(this, arguments);
+	        }
+	    }
+	
+	    _inherits(Sidebar, _React$Component);
+	
+	    _createClass(Sidebar, [{
+	        key: 'handleLogout',
+	        value: function handleLogout(event) {
+	            this.props.flux.getActions('auth').logout();
+	        }
+	    }, {
+	        key: 'handleNotes',
+	        value: function handleNotes(event) {}
+	    }, {
+	        key: 'handleBlockNotes',
+	        value: function handleBlockNotes(event) {}
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2['default'].createElement(
+	                'div',
+	                { className: 'ui left vertical inverted sidebar menu visible' },
+	                _react2['default'].createElement(
+	                    'a',
+	                    { className: 'item', onClick: this.handleBlockNotes.bind(this) },
+	                    _react2['default'].createElement('i', { className: 'book icon' }),
+	                    ' Carnets de notes'
+	                ),
+	                _react2['default'].createElement(
+	                    'a',
+	                    { className: 'item', onClick: this.handleNotes.bind(this) },
+	                    _react2['default'].createElement('i', { className: 'file text outline icon' }),
+	                    ' Notes'
+	                ),
+	                _react2['default'].createElement(
+	                    'a',
+	                    { className: 'item', onClick: this.handleLogout.bind(this) },
+	                    _react2['default'].createElement('i', { className: 'sign out icon' }),
+	                    ' Déconnexion'
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Sidebar;
+	})(_react2['default'].Component);
+	
+	exports['default'] = Sidebar;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

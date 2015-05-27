@@ -1,19 +1,23 @@
 import React from 'react';
+import Sidebar from '../components/sidebar';
 
 export default class LoginView extends React.Component {
     handleLogout(event) {
         this.props.flux.getActions('auth').logout();
     }
 
+    handleNotes(event) {
+
+    }
+
+    handleBlockNotes(event) {
+
+    }
+
     render() {
         return (
             <div>
-                <div className="row">
-                    <div className="column">
-                        IndexView
-                        <button className="ui button" onClick={this.handleLogout.bind(this)}>Déconnexion</button>
-                    </div>
-                </div>
+                <Sidebar flux={this.props.flux} />
             </div>
         );
     }
