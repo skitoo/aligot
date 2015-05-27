@@ -6,10 +6,11 @@ export default class Sidebar extends React.Component {
     }
 
     handleNotes(event) {
-
+        this.props.flux.router.replaceWith('notes');
     }
 
     handleBlockNotes(event) {
+        this.props.flux.router.replaceWith('notebooks');
 
     }
 

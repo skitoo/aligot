@@ -8,6 +8,8 @@ import RegisterView from './views/registerView';
 import SignedInView from './views/signedInView';
 
 import IndexView from './views/indexView';
+import NotebooksView from './views/notebooksView';
+import NotesView from './views/notesView';
 
 
 let routes = (
@@ -19,6 +21,8 @@ let routes = (
 
         <Route name="signedIn" handler={SignedInView}>
             <Route name="index" path="/" handler={IndexView} />
+            <Route name="notes" path="/notes" handler={NotesView} />
+            <Route name="notebooks" path="/notebooks" handler={NotebooksView} />
         </Route>
     </Route>
 );
