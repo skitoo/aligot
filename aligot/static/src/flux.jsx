@@ -2,7 +2,7 @@ import Flummox from 'flummox';
 import NotebookActions from './actions/notebookActions';
 import NotebookStore from './stores/notebookStore';
 import AuthActions from './actions/authActions';
-
+import AuthStore from './stores/authStore';
 
 export default class Flux extends Flummox {
     constructor() {
@@ -14,5 +14,6 @@ export default class Flux extends Flummox {
 
         // stores -------------------------------------------------------- //
         this.createStore('notebooks', NotebookStore, this);
+        this.createStore('auth', AuthStore, this);
     }
 }

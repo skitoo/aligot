@@ -9,12 +9,12 @@ import routes from './routes';
 
 let flux = new Flux();
 
-var router = Router.create({
+flux.router = Router.create({
     routes: routes,
     location: Router.HistoryLocation
 });
 
-router.run((Handler, state) => {
+flux.router.run((Handler, state) => {
     React.render(
         <FluxComponent flux={flux}>
             <Handler {...state} />
