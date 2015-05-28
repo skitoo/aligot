@@ -10,7 +10,7 @@ from ..models import Note, NoteBook, NoteRevision, User
 class TestNoteRevisionAPI(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create(username='user', password='pass')
+        self.user = User.objects.create(username='user', password='pass', email='mail@mail.com')
         self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
         self.note = Note.objects.create(title='a title for note', created_by=self.user, notebook=self.notebook)
         self.note2 = Note.objects.create(title='a title for note2', created_by=self.user, notebook=self.notebook)
@@ -96,8 +96,8 @@ class TestNoteRevisionAPI(TestCase):
 class TestNoteRevisionApiWithDifferentUser(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user1 = User.objects.create(username='user1', password='pass')
-        self.user2 = User.objects.create(username='user2', password='pass')
+        self.user1 = User.objects.create(username='user1', password='pass', email='mail1@mail.com')
+        self.user2 = User.objects.create(username='user2', password='pass', email='mail2@mail.com')
         self.notebook1 = NoteBook.objects.create(title='a title', created_by=self.user1)
         self.notebook2 = NoteBook.objects.create(title='a title', created_by=self.user2)
         self.note1 = Note.objects.create(title='a title for note', created_by=self.user1, notebook=self.notebook1)
