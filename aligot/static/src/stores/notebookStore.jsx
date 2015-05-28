@@ -5,11 +5,20 @@ export default class NotebookStore extends Store {
     constructor(flux) {
         super();
 
-        this.register(flux.getActionIds('notebooks').createNotebook, this.handleNotebook);
+        const notebooksIds = flux.getActionIds('notebooks');
+
+        this.register(notebooksIds.createNotebook, this.handleNotebook);
+        this.register(notebooksIds.listNotebooks, this.handleListNotebooks);
 
         this.state = {
             notebooks: []
         };
+    }
+
+    handleListNotebooks(notebooks) {
+        this.setState({
+            notebooks: notebooks
+        });
     }
 
     handleNotebook(notebook) {
