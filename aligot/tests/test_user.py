@@ -52,3 +52,4 @@ class TestUser(TestCase):
         response = self.client.delete(reverse('user-detail', args=[user.id]))
 
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code, response.content)
+
