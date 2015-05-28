@@ -2,14 +2,23 @@ import {Store} from 'flummox';
 
 
 export default class NotebookStore extends Store {
-    constructor(app) {
+    constructor(flux) {
         super();
 
-        this.register(app.getActionIds('notebooks').createNotebook, this.handleNotebook);
+        const notebooksIds = flux.getActionIds('notebooks');
+
+        this.register(notebooksIds.createNotebook, this.handleNotebook);
+        this.register(notebooksIds.listNotebooks, this.handleListNotebooks);
 
         this.state = {
             notebooks: []
         };
+    }
+
+    handleListNotebooks(notebooks) {
+        this.setState({
+            notebooks: notebooks
+        });
     }
 
     handleNotebook(notebook) {

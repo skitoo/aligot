@@ -3,24 +3,20 @@ import Router from 'react-router';
 import FluxComponent from 'flummox/component';
 
 import Aligot from './views/aligot';
-import App from './app';
+import Flux from './flux';
 import routes from './routes';
 
 
-// const app = new App();
-//
-// React.render(<Aligot app={app} />, document.getElementById('aligot'));
+let flux = new Flux();
 
-let app = new App();
-
-var router = Router.create({
+flux.router = Router.create({
     routes: routes,
     location: Router.HistoryLocation
 });
 
-router.run((Handler, state) => {
+flux.router.run((Handler, state) => {
     React.render(
-        <FluxComponent flux={app}>
+        <FluxComponent flux={flux}>
             <Handler {...state} />
         </FluxComponent>,
         document.getElementById('aligot')

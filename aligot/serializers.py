@@ -8,6 +8,8 @@ from .models import Note, NoteBook, NoteRevision, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = ('username', 'password', 'email')
+        write_only_fields = ('password',)
 
 
 class NoteBookSerializer(serializers.ModelSerializer):

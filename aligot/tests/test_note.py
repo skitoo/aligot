@@ -27,7 +27,7 @@ class TestNoteApi(TestCase):
         )
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, Note.objects.count())
-        self.assertEquals(self.user.username, Note.objects.get(pk=1).created_by.username)
+        self.assertEquals(self.user.username, Note.objects.all()[0].created_by.username)
 
     def test_create_without_notebook(self):
         response = self.client.post(
@@ -46,7 +46,7 @@ class TestNoteApi(TestCase):
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
         self.assertEquals(1, Note.objects.count())
         self.assertEquals('new title', Note.objects.all()[0].title)
-        self.assertEquals(self.user.username, Note.objects.get(pk=1).created_by.username)
+        self.assertEquals(self.user.username, Note.objects.all()[0].created_by.username)
 
     def test_patch(self):
         note = Note.objects.create(title='a title for note', created_by=self.user, notebook=self.notebook)

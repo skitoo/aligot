@@ -18,3 +18,7 @@ script: python manage.py test
 after_success:
   - coverage run --source='.' manage.py test
   - coveralls
+
+
+notifications:
+  slack: aligot:b7YEBxUl9Edo1XLYOFBMZbPv
