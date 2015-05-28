@@ -12,6 +12,11 @@ from ..serializers import (NoteBookSerializer, NoteRevisionSerializer,
 logger = logging.getLogger(__name__)
 
 
+class UserCreate(generics.CreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    serializer_class = UserSerializer
+
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
     queryset = User.objects.all()
