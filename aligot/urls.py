@@ -9,8 +9,7 @@ from .views import api
 urlpatterns = patterns(
     '',
     url(r'^$', 'aligot.views.html.index', name='index'),
-    url(r'^login$', 'aligot.views.html.index', name='login'),
-    url(r'^register$', 'aligot.views.html.index', name='register'),
+    url(r'^login|register|notes|notebooks$', 'aligot.views.html.index'),
 
 
     url(r'^admin/', include(admin.site.urls)),
