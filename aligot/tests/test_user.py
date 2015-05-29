@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 from ..models import User
 
 
-class TestUser(TestCase):
+class TestUserApi(TestCase):
 
     def setUp(self):
         self.client = APIClient()
@@ -52,4 +52,3 @@ class TestUser(TestCase):
         response = self.client.delete(reverse('user-detail', args=[user.id]))
 
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code, response.content)
-
