@@ -15,6 +15,8 @@ urlpatterns = patterns(
 
     url(r'^api/token-auth/', views.obtain_auth_token),
 
+    url(r'^api/user/create/$', api.UserCreate.as_view(), name='user-create'),
+
     url(r'^api/user/(?P<pk>[0-9]+)/$', api.UserDetail.as_view(), name='user-detail'),
     url(r'^api/notebooks/$', api.NoteBookList.as_view(), name='notebook-list'),
     url(r'^api/notebook/(?P<pk>[^/]+)/$', api.NoteBookDetail.as_view(), name='notebook-detail'),

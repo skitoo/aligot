@@ -11,7 +11,7 @@ from ..models import NoteBook, User
 class TestNoteBookApi(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create(username='user', password='pass')
+        self.user = User.objects.create(username='user', password='pass', email='mail@mail.com')
         self.client.force_authenticate(user=self.user)
 
     def test_create_without_params(self):
@@ -93,8 +93,8 @@ class TestNoteBookApiWithoutUser(TestCase):
 class TestNoteBookApiWithDifferentUser(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user1 = User.objects.create(username='user1', password='pass')
-        self.user2 = User.objects.create(username='user2', password='pass')
+        self.user1 = User.objects.create(username='user1', password='pass', email='mail1@mail.com')
+        self.user2 = User.objects.create(username='user2', password='pass', email='mail2@mail.com')
         self.client.force_authenticate(user=self.user1)
 
     def test_get_all(self):
