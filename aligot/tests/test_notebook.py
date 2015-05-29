@@ -93,6 +93,10 @@ class TestNoteBookApiWithoutUser(TestCase):
         response = self.client.post(reverse('notebook-list'), {'title': 'a title'})
         self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
+    def test_update(self):
+        response = self.client.put(reverse('notebook-detail', args=[self.notebook.id]), {'title': 'new title'})
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
 
 class TestNoteBookApiWithDifferentUser(TestCase):
     def setUp(self):
