@@ -93,6 +93,27 @@ class TestNoteRevisionAPI(TestCase):
         self.assertEquals(rev4.content, response.data[1]['content'])
 
 
+class TestNoteRevisionApiWithoutUser(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create(username='user', password='pass')
+        self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
+        self.note = Note.objects.create(title='note 1', created_by=self.user, notebook=self.notebook)
+        self.revision = NoteRevision.objects.create(content='a content for note', created_by=self.user, note=self.note)
+
+    def test_get(self):
+        response = self.client.get(reverse('revision-detail', args=[self.revision.id]))
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_get_all(self):
+        response = self.client.get(reverse('revision-list'))
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+    def test_get_all_of_note(self):
+        response = self.client.get(reverse('note-revisionlist', args=[self.note.id]))
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
+
 class TestNoteRevisionApiWithDifferentUser(TestCase):
     def setUp(self):
         self.client = APIClient()
