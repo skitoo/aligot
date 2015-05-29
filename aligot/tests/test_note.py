@@ -100,48 +100,6 @@ class TestNoteApi(TestCase):
         self.assertEquals('note 4', response.data[1]['title'])
 
 
-class TestNoteApiWithoutUser(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.user = User.objects.create(username='user', password='pass')
-        self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
-        self.note = Note.objects.create(title='note 1', created_by=self.user, notebook=self.notebook)
-
-    def test_get(self):
-        response = self.client.get(reverse('note-detail', args=[self.note.id]))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_get_all(self):
-        response = self.client.get(reverse('note-list'))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_get_all_of_notebook(self):
-        response = self.client.get(reverse('notebook-notelist', args=[self.notebook.id]))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_create(self):
-        response = self.client.post(reverse('note-list'), {'title': 'a title', 'notebook': self.notebook.id})
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_update(self):
-        response = self.client.put(
-            reverse('note-detail', args=[self.note.id]),
-            {'title': 'new title', 'notebook': self.notebook.id}
-        )
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_delete(self):
-        response = self.client.delete(reverse('note-detail', args=[self.note.id]))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_patch(self):
-        response = self.client.patch(
-            reverse('note-detail', args=[self.note.id]),
-            {'title': 'new title'}
-        )
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-
 class TestNoteApiWithDifferentUser(TestCase):
     def setUp(self):
         self.client = APIClient()

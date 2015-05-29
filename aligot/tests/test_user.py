@@ -20,7 +20,6 @@ class TestUser(TestCase):
 
 
 class TestUserApi(TestCase):
-
     def setUp(self):
         self.client = APIClient()
 
@@ -45,6 +44,21 @@ class TestUserApi(TestCase):
         user = User.objects.all()[0]
         self.assertEqual(user.username, data['username'], 'Username in DB don\'t match')
 
+    def test_retrieve(self):
+        """
+        Retrieve user & wait for 200 response
+        """
+        user = User.objects.create_user(
+            username='test',
+            password='test',
+            email='mail@mail.com'
+        )
+        self.client.force_authenticate(user=user)
+        self.assertEqual(1, User.objects.count(), 'ORM don\'t insert user in DB')
+
+        response = self.client.get(reverse('user-detail', args=[user.username]))
+        self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
+
     def test_delete(self):
         """
         Simple deletion of an user in DB
@@ -60,6 +74,6 @@ class TestUserApi(TestCase):
 
         self.assertEqual(1, User.objects.count(), 'ORM don\'t insert user in DB')
 
-        response = self.client.delete(reverse('user-detail', args=[user.id]))
+        response = self.client.delete(reverse('user-detail', args=[user.username]))
 
         self.assertEqual(status.HTTP_204_NO_CONTENT, response.status_code, response.content)

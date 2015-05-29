@@ -10,11 +10,9 @@ from rest_framework.authtoken.models import Token
 
 
 class User(AbstractUser):
+
     class Meta(object):
         unique_together = ('email', )
-
-User._meta.get_field('email').blank = False
-User._meta.get_field('email').null = False
 
 
 class NoteBook(models.Model):

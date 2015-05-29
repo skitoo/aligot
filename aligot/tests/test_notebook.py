@@ -75,37 +75,6 @@ class TestNoteBookApi(TestCase):
         self.assertEquals('notebook 2', response.data[1]['title'])
 
 
-class TestNoteBookApiWithoutUser(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.user = User.objects.create(username='user', password='pass')
-        self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
-
-    def test_get(self):
-        response = self.client.get(reverse('notebook-detail', args=[self.notebook.id]))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_get_all(self):
-        response = self.client.get(reverse('notebook-list'))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_create(self):
-        response = self.client.post(reverse('notebook-list'), {'title': 'a title'})
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_update(self):
-        response = self.client.put(reverse('notebook-detail', args=[self.notebook.id]), {'title': 'new title'})
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_delete(self):
-        response = self.client.delete(reverse('notebook-detail', args=[self.notebook.id]))
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-    def test_patch(self):
-        response = self.client.patch(reverse('notebook-detail', args=[self.notebook.id]), {'title': 'new title'})
-        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
-
 class TestNoteBookApiWithDifferentUser(TestCase):
     def setUp(self):
         self.client = APIClient()
