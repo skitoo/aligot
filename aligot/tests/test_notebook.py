@@ -101,6 +101,10 @@ class TestNoteBookApiWithoutUser(TestCase):
         response = self.client.delete(reverse('notebook-detail', args=[self.notebook.id]))
         self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
+    def test_patch(self):
+        response = self.client.patch(reverse('notebook-detail', args=[self.notebook.id]), {'title': 'new title'})
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
 
 class TestNoteBookApiWithDifferentUser(TestCase):
     def setUp(self):
