@@ -5,7 +5,6 @@ import request from 'superagent';
 export default class AuthActions extends Actions {
 
     loadUser() {
-        console.log('loadUser');
         return {
             token: sessionStorage.token,
             username: sessionStorage.username

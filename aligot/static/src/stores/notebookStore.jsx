@@ -10,20 +10,14 @@ export default class NotebookStore extends Store {
         this.register(notebooksIds.createNotebook, this.handleNotebook);
         this.register(notebooksIds.listNotebooks, this.handleListNotebooks);
 
-        this.state = {
-            notebooks: []
-        };
+        this.state = {notebooks: []};
     }
 
     handleListNotebooks(notebooks) {
-        this.setState({
-            notebooks: notebooks
-        });
+        this.setState({notebooks: notebooks});
     }
 
     handleNotebook(notebook) {
-        this.setState({
-            notebooks: this.state.notebooks.concat([notebook])
-        });
+        this.setState({notebooks: this.state.notebooks.concat([notebook])});
     }
 }
