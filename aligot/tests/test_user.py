@@ -103,3 +103,27 @@ class TestUserApi(TestCase):
         user = User.objects.get(username='test')
 
         self.assertEqual(user.email, data['email'], 'Update failed in DB')
+
+    def test_patch(self):
+        """
+        Test if a connected user can patch a user Field.
+        """
+        user = User.objects.create_user(
+            username='test',
+            password='test',
+            email='mail@mail.com'
+        )
+        self.assertEqual(1, User.objects.count(), 'ORM don\'t insert user in DB')
+
+        self.client.force_authenticate(user=user)
+
+        data = {
+            'email': 'changed_mail@mail.com',
+        }
+
+        response = self.client.patch(reverse('user-detail', args=[user.username]), data)
+        self.assertEqual(status.HTTP_200_OK, response.status_code, response.content)
+
+        user = User.objects.get(username='test')
+
+        self.assertEqual(user.email, data['email'], 'Update failed in DB')
