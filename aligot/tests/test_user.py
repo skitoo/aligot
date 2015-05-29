@@ -9,25 +9,12 @@ from rest_framework.test import APIClient
 from ..models import User
 
 
-class TestUser(TestCase):
-    def test_create_with_same_email(self):
-        User.objects.create(username='user1', password='mypassword', email='email@email.com')
-        self.assertRaises(
-            IntegrityError,
-            User.objects.create,
-            username='user2', password='mypassword', email='email@email.com'
-        )
+class TestUserCreation(TestCase):
+    """
+    Test cases for all the user creations schemes
+    """
 
-
-class TestUserApi(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-
-    def test_create_without_params(self):
-        self.assertEquals(status.HTTP_400_BAD_REQUEST, self.client.post(reverse('user-create')).status_code)
-        self.assertEquals(0, User.objects.count())
-
-    def test_create(self):
+    def test_create_user(self):
         """
         Create user & wait for 201 response.
         """
@@ -43,6 +30,36 @@ class TestUserApi(TestCase):
         # Check the first
         user = User.objects.all()[0]
         self.assertEqual(user.username, data['username'], 'Username in DB don\'t match')
+
+    def test_create_with_same_email(self):
+        """
+        Test on the case of creation for an user with a same mail than an other user in DB
+        Wait for 400 Bad Request
+        """
+        first_user = User.objects.create(
+            username='test1',
+            password='test',
+            email='test@mail.com'
+        )
+        self.assertEqual(1, User.objects.count(), 'ORM don\'t insert user in DB')
+
+        data = {
+            'username': 'test2',
+            'password': 'test',
+            'email': 'test@mail.com'
+        }
+        response = self.client.post(reverse('user-create'), data)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
+        self.assertEqual(1, User.objects.count())
+
+
+class TestUserApi(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_create_without_params(self):
+        self.assertEquals(status.HTTP_400_BAD_REQUEST, self.client.post(reverse('user-create')).status_code)
+        self.assertEquals(0, User.objects.count())
 
     def test_retrieve(self):
         """
