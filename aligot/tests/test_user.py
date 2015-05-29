@@ -1,11 +1,22 @@
 # coding: utf-8
 
 from django.core.urlresolvers import reverse
+from django.db.utils import IntegrityError
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
 from ..models import User
+
+
+class TestUser(TestCase):
+    def test_create_with_same_email(self):
+        User.objects.create(username='user1', password='mypassword', email='email@email.com')
+        self.assertRaises(
+            IntegrityError,
+            User.objects.create,
+            username='user2', password='mypassword', email='email@email.com'
+        )
 
 
 class TestUserApi(TestCase):
