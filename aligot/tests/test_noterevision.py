@@ -120,6 +120,13 @@ class TestNoteRevisionApiWithoutUser(TestCase):
         )
         self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
+    def test_update(self):
+        response = self.client.put(
+            reverse('revision-detail', args=[self.revision.id]),
+            {'content': 'new content', 'note': self.note.id}
+        )
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
 
 class TestNoteRevisionApiWithDifferentUser(TestCase):
     def setUp(self):
