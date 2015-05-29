@@ -130,6 +130,10 @@ class TestNoteApiWithoutUser(TestCase):
         )
         self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
 
+    def test_delete(self):
+        response = self.client.delete(reverse('note-detail', args=[self.note.id]))
+        self.assertEquals(status.HTTP_401_UNAUTHORIZED, response.status_code)
+
 
 class TestNoteApiWithDifferentUser(TestCase):
     def setUp(self):
