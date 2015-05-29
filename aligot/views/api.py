@@ -13,13 +13,13 @@ logger = logging.getLogger(__name__)
 
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
 class NoteBookList(generics.ListCreateAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner,)
     serializer_class = NoteBookSerializer
 
     def get_queryset(self):
@@ -30,13 +30,13 @@ class NoteBookList(generics.ListCreateAPIView):
 
 
 class NoteBookDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner,)
     queryset = NoteBook.objects.all()
     serializer_class = NoteBookSerializer
 
 
 class NoteList(generics.ListCreateAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteBookOwner,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner, IsNoteBookOwner,)
     serializer_class = NoteSerializer
 
     def perform_create(self, serializer):
@@ -49,13 +49,13 @@ class NoteList(generics.ListCreateAPIView):
 
 
 class NoteDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteBookOwner,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner, IsNoteBookOwner,)
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
 
 
 class NoteRevisionList(generics.ListCreateAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteOwner,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner, IsNoteOwner,)
     serializer_class = NoteRevisionSerializer
 
     def perform_create(self, serializer):
@@ -68,6 +68,6 @@ class NoteRevisionList(generics.ListCreateAPIView):
 
 
 class NoteRevisionDetail(generics.RetrieveAPIView):
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsOwner, IsNoteOwner,)
+    permission_classes = (permissions.IsAuthenticated, IsOwner, IsNoteOwner,)
     queryset = NoteRevision.objects.all()
     serializer_class = NoteRevisionSerializer
