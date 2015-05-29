@@ -23,6 +23,12 @@ class NoteBook(models.Model):
     created_by = models.ForeignKey(User, related_name='notebooks')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.title
+
+    def __repr__(self):
+        return str(self)
+
 
 class Note(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -33,6 +39,12 @@ class Note(models.Model):
     created_by = models.ForeignKey(User, related_name='notes')
     notebook = models.ForeignKey(NoteBook, related_name='notes')
 
+    def __str__(self):
+        return self.title
+
+    def __repr__(self):
+        return str(self)
+
 
 class NoteRevision(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -40,6 +52,12 @@ class NoteRevision(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User)
     note = models.ForeignKey(Note, related_name='revisions')
+
+    def __str__(self):
+        return '%s#%s' % (self.note.title, self.created_at)
+
+    def __repr__(self):
+        return str(self)
 
 
 @receiver(post_save, sender=User)
