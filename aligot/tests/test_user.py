@@ -9,7 +9,7 @@ from rest_framework.test import APIClient
 from ..models import User
 
 
-class TestUserCreation(TestCase):
+class TestUserCreationAPI(TestCase):
     """
     Test cases for all the user creations schemes
     """
@@ -47,6 +47,29 @@ class TestUserCreation(TestCase):
             'username': 'test2',
             'password': 'test',
             'email': 'test@mail.com'
+        }
+        response = self.client.post(reverse('user-create'), data)
+        self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
+        self.assertEqual(1, User.objects.count())
+
+    def test_create_with_same_username(self):
+        """
+        Test the creation's case of an user with a same username try to register
+        Wait for 400 Bad Request
+        The email difference musn't impact the test
+        """
+
+        first_user = User.objects.create(
+            username='test',
+            password='test',
+            email='test1@mail.com'
+        )
+        self.assertEqual(1, User.objects.count(), 'ORM don\'t insert user in DB')
+
+        data = {
+            'username': 'test',
+            'password': 'test',
+            'email': 'test2@mail.com'
         }
         response = self.client.post(reverse('user-create'), data)
         self.assertEqual(status.HTTP_400_BAD_REQUEST, response.status_code, response.content)
