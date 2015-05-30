@@ -20,9 +20,9 @@ export default class NotebooksView extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="ui pushable">
                 <Sidebar flux={this.props.flux} />
-                <div className="ui pusher">
+                <div className="pusher">
                     <h2>Note</h2>
                     <FluxComponent flux={this.props.flux} connectToStores={['notebooks']}>
                         <NotebooksList notebooks={this.props.notebooks} />
