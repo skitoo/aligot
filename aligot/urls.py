@@ -9,15 +9,15 @@ from .views import api
 urlpatterns = patterns(
     '',
     url(r'^$', 'aligot.views.html.index', name='index'),
-    url(r'^login$', 'aligot.views.html.index', name='login'),
-    url(r'^register$', 'aligot.views.html.index', name='register'),
-
+    url(r'^(?P<page>login|register|notes|notebooks)$', 'aligot.views.html.index', name='html_views'),
 
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/token-auth/', views.obtain_auth_token),
 
-    url(r'^api/user/(?P<pk>[0-9]+)/$', api.UserDetail.as_view(), name='user-detail'),
+    url(r'^api/user/create/$', api.UserCreate.as_view(), name='user-create'),
+    url(r'^api/user/(?P<username>\w+)/$', api.UserDetail.as_view(), name='user-detail'),
+
     url(r'^api/notebooks/$', api.NoteBookList.as_view(), name='notebook-list'),
     url(r'^api/notebook/(?P<pk>[^/]+)/$', api.NoteBookDetail.as_view(), name='notebook-detail'),
     url(r'^api/notebook/(?P<notebook>[^/]+)/notes/$', api.NoteList.as_view(), name='notebook-notelist'),

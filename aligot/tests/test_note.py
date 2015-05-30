@@ -11,7 +11,7 @@ from ..models import Note, NoteBook, User
 class TestNoteApi(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create(username='user', password='pass')
+        self.user = User.objects.create(username='user', password='pass', email='mail@mail.com')
         self.notebook = NoteBook.objects.create(title='a title', created_by=self.user)
         self.notebook2 = NoteBook.objects.create(title='a title 2', created_by=self.user)
         self.client.force_authenticate(user=self.user)
@@ -103,8 +103,8 @@ class TestNoteApi(TestCase):
 class TestNoteApiWithDifferentUser(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user1 = User.objects.create(username='user1', password='pass')
-        self.user2 = User.objects.create(username='user2', password='pass')
+        self.user1 = User.objects.create(username='user1', password='pass', email='mail1@mail.com')
+        self.user2 = User.objects.create(username='user2', password='pass', email='mail2@mail.com')
         self.client.force_authenticate(user=self.user1)
         self.notebook = NoteBook.objects.create(title='a title', created_by=self.user1)
         self.notebook2 = NoteBook.objects.create(title='a title', created_by=self.user2)
