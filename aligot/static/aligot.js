@@ -1602,12 +1602,12 @@
 	        key: 'render',
 	        value: function render() {
 	            return _react2['default'].createElement(
-	                'ul',
-	                null,
+	                'div',
+	                { className: 'ui link list' },
 	                this.props.notebooks.map(function (notebook) {
 	                    return _react2['default'].createElement(
-	                        'li',
-	                        null,
+	                        'a',
+	                        { className: 'item' },
 	                        notebook.title
 	                    );
 	                })
