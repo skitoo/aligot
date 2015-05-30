@@ -2797,18 +2797,22 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var router = this.props.flux.router;
+	            var blocnotesClass = router.isActive('notebooks') ? 'active item' : 'item';
+	            var notesClass = router.isActive('notes') ? 'active item' : 'item';
+	
 	            return _react2['default'].createElement(
 	                'div',
 	                { className: 'ui left vertical inverted sidebar menu visible' },
 	                _react2['default'].createElement(
 	                    'a',
-	                    { className: 'item', onClick: this.handleBlockNotes.bind(this) },
+	                    { className: blocnotesClass, onClick: this.handleBlockNotes.bind(this) },
 	                    _react2['default'].createElement('i', { className: 'book icon' }),
 	                    ' Carnets de notes'
 	                ),
 	                _react2['default'].createElement(
 	                    'a',
-	                    { className: 'item', onClick: this.handleNotes.bind(this) },
+	                    { className: notesClass, onClick: this.handleNotes.bind(this) },
 	                    _react2['default'].createElement('i', { className: 'file text outline icon' }),
 	                    ' Notes'
 	                ),
