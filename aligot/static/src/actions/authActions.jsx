@@ -38,8 +38,16 @@ export default class AuthActions extends Actions {
         }
     }
 
-    register(username, email, password) {
+    register(username, email, password, password_confirmation) {
 
+        // Client validation.
+
+
+        // Send request to the server.
+        let promise = new Promise((resolve, reject) => {
+
+
+        })
     }
 
     checkUsername(username) {
