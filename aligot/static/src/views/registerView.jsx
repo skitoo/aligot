@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../components/button';
-import {Login, Password, Email} from '../components/inputs';
+import {Login, Password, Email, PasswordConfirmation} from '../components/inputs';
 import {Link} from 'react-router';
 
 export default class RegisterView extends React.Component {
@@ -14,6 +14,7 @@ export default class RegisterView extends React.Component {
                             <Login />
                             <Email />
                             <Password />
+                            <PasswordConfirmation />
                             <Button label="S'inscrire" color="primary" />
                             Déjà un compte ? <Link to="login">Se connecter</Link>
                         </form>
