@@ -6,7 +6,9 @@ import Sidebar from '../components/sidebar';
 class NotebooksList extends React.Component {
     render() {
         return (
-            <ul>{this.props.notebooks.map(notebook => <li>{notebook.title}</li>)}</ul>
+            <div className="ui link list">
+                {this.props.notebooks.map(notebook => <a className="item">{notebook.title}</a>)}
+            </div>
         );
     }
 }
