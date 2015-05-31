@@ -21,6 +21,9 @@ class NoteBook(models.Model):
     created_by = models.ForeignKey(User, related_name='notebooks')
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def note_count(self):
+        return self.notes.count()
+
     def __str__(self):
         return self.title
 

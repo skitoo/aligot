@@ -26,6 +26,7 @@ class TestNoteBookApi(TestCase):
         self.assertEquals(status.HTTP_201_CREATED, response.status_code, response.content)
         self.assertEquals(1, NoteBook.objects.count())
         self.assertEquals(self.user.username, NoteBook.objects.all()[0].created_by.username)
+        # self.assertEquals(0, NoteBook.objects.all()[0].note_count)
 
     def test_update(self):
         notebook = NoteBook.objects.create(title='a title', created_by=self.user)
@@ -62,8 +63,9 @@ class TestNoteBookApi(TestCase):
         self.assertEquals(1, NoteBook.objects.count())
         response = self.client.get(reverse('notebook-detail', args=[notebook.id]))
         self.assertEquals(status.HTTP_200_OK, response.status_code, response.content)
-        self.assertEquals('a title', response.data['title'], response.data)
-        self.assertEquals(self.user.username, response.data['created_by'], response.data)
+        self.assertEquals('a title', response.data['title'])
+        self.assertEquals(0, response.data['note_count'])
+        self.assertEquals(self.user.username, response.data['created_by'])
 
     def test_get_all(self):
         NoteBook.objects.create(title='notebook 1', created_by=self.user)

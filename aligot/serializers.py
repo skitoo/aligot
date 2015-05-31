@@ -20,6 +20,7 @@ class NoteBookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = NoteBook
+        fields = ('id', 'title', 'created_by', 'created_at', 'note_count',)
 
 
 class NoteSerializer(serializers.ModelSerializer):
