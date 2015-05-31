@@ -6,19 +6,17 @@ import Sidebar from '../components/sidebar';
 class NotebooksList extends React.Component {
     render() {
         return (
-            <div className="ui left vertical wide sidebar visible">
+            <div className="ui left vertical wide sidebar menu visible">
+                <div className="item"><h2>Carnet de notes</h2></div>
                 <div className="item">
-                    <h2 className="center">Carnet de notes</h2>
-                </div>
-                <div className="ui divided list">
-                    {this.props.notebooks.map(notebook =>
-                        <a className="item">
-                            <div className="content">
-                                <div className="header">{notebook.title}</div>
-                                <div className="description">{notebook.note_count} notes</div>
-                            </div>
-                        </a>
-                    )}
+                    <div className="menu divided">
+                        {this.props.notebooks.map(notebook =>
+                            <a className="item">
+                                <h4>{notebook.title}</h4>
+                                <div>{notebook.note_count} note(s)</div>
+                            </a>
+                        )}
+                    </div>
                 </div>
             </div>
         );
