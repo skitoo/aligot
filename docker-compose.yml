@@ -1,0 +1,27 @@
+
+db:
+  image: postgres
+
+
+web:
+  build: .
+  command: python manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/aligot
+  ports:
+    - "8000:8000"
+  links:
+    - db
+  environment:
+    DB_ENGINE: django.db.backends.postgresql_psycopg2
+    DB_NAME: postgres
+    DB_USER: postgres
+    DB_HOST: db
+    DB_PORT: 5432
+
+
+webpack:
+  build: .
+  command: npm run watch
+  volumes:
+    - .:/aligot
