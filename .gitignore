@@ -8,3 +8,4 @@ __pychache__/
 .coverage
 node_modules
 aligot/static/aligot.js.map
+aligot/migrations
