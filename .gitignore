@@ -9,3 +9,4 @@ __pychache__/
 node_modules
 aligot/static/aligot.js.map
 aligot/migrations
+aligot/static/aligot.js
