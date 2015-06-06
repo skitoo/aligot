@@ -15,3 +15,4 @@ RUN pip install pytest
 RUN npm install
 
 ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE aligot.settings
