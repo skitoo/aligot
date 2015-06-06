@@ -11,6 +11,7 @@ ADD . /aligot
 WORKDIR /aligot
 
 RUN pip install -r requirements.txt
+RUN pip install pytest
 RUN npm install
 
 ENV PYTHONUNBUFFERED 1
