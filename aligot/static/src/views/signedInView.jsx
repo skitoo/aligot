@@ -6,7 +6,9 @@ import FluxComponent from 'flummox/component';
 class LoadUserInner extends React.Component {
 
     componentDidMount() {
-        this.props.flux.getActions('auth').loadUser();
+        if (this.props.token == null) {
+            this.props.flux.getActions('auth').loadUser();
+        }
     }
 
     componentDidUpdate() {
@@ -19,7 +21,7 @@ class LoadUserInner extends React.Component {
         if (this.props.token != null) {
             return this.props.children;
         } else {
-            return <div>Redirection...</div>
+            return <div>Redirection...</div>;
         }
     }
 }

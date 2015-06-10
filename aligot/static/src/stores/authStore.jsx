@@ -1,6 +1,5 @@
 import {Store} from 'flummox';
-
-
+import {NOT_CONNECTED} from '../constants';
 
 export default class AuthStore extends Store {
     constructor(flux) {
@@ -14,28 +13,32 @@ export default class AuthStore extends Store {
 
         this.state = {
             token: null,
-            username: null
+            username: null,
+            state: NOT_CONNECTED
         };
     }
 
     handleLoadUser(data) {
         this.setState({
             token: data.token,
-            username: data.username
+            username: data.username,
+            state: data.state
         });
     }
 
     handleLogin(data) {
         this.setState({
             token: data.token,
-            username: data.username
+            username: data.username,
+            state: data.state
         });
     }
 
     handleLogout() {
         this.setState({
             token: null,
-            username: null
+            username: null,
+            state: NOT_CONNECTED
         });
     }
 }

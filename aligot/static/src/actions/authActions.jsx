@@ -1,6 +1,6 @@
 import {Actions} from 'flummox';
 import request from 'superagent';
-
+import {CONNECTED, BAD_CREDENTIALS} from '../constants';
 
 export default class AuthActions extends Actions {
 
@@ -12,21 +12,27 @@ export default class AuthActions extends Actions {
     }
 
     login(username, password) {
-        let promise = new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
             request.post('/api/token-auth/').send({
                 username: username,
                 password: password
-            }).accept('application/json').end((error, response) => {
-                error ? reject(error) : resolve({
-                    token:response.body.token,
-                    username: username
-                });
+            }).end((error, response) => {
+                if (error) {
+                    reject({
+                        username: null,
+                        token: null,
+                        state: BAD_CREDENTIALS
+                    });
+                } else {
+                    sessionStorage.token = response.body.token;
+                    sessionStorage.username = username;
+                    resolve({
+                        token: response.body.token,
+                        username: username,
+                        state: CONNECTED
+                    });
+                }
             });
-        });
-        return promise.then(val => {
-            sessionStorage.token = val.token;
-            sessionStorage.username = val.username;
-            return val;
         });
     }
 
@@ -35,10 +41,10 @@ export default class AuthActions extends Actions {
         return {
             token: null,
             username: null
-        }
+        };
     }
 
-    register(username, email, password, password_confirmation) {
+    register(username, email, password, passwordConfirmation) {
 
         // Client validation.
 
@@ -47,7 +53,8 @@ export default class AuthActions extends Actions {
         let promise = new Promise((resolve, reject) => {
 
 
-        })
+        });
+        return promise.then();
     }
 
     checkUsername(username) {

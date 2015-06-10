@@ -4,6 +4,7 @@ import FluxComponent from 'flummox/component';
 import Button from '../components/button';
 import {Login, Password} from '../components/inputs';
 import {Link} from 'react-router';
+import {CONNECTED} from '../constants';
 
 
 class LoginViewInner extends React.Component {
@@ -14,7 +15,7 @@ class LoginViewInner extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.token != null) {
+        if (this.props.state === CONNECTED) {
             this.props.flux.router.replaceWith('index');
         }
     }
