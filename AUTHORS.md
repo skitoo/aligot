@@ -7,4 +7,4 @@
 
 ## Contributors
 
-* Quenton Amirault
+* Quentin Amirault <quentin.amirault@gmail.com>
