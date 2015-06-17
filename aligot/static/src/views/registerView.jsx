@@ -13,7 +13,7 @@ export default class RegisterView extends React.Component {
                 event.target.email.value,
                 event.target.password.value,
                 event.target.password_confirmation.value
-            )
+            );
     }
 
     render() {
