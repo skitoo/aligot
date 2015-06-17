@@ -3,7 +3,6 @@ import request from 'superagent';
 import {CONNECTED, BAD_CREDENTIALS} from '../constants';
 
 export default class AuthActions extends Actions {
-
     loadUser() {
         return {
             token: sessionStorage.token,
@@ -12,13 +11,13 @@ export default class AuthActions extends Actions {
     }
 
     login(username, password) {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             request.post('/api/token-auth/').send({
                 username: username,
                 password: password
             }).end((error, response) => {
                 if (error) {
-                    reject({
+                    resolve({
                         username: null,
                         token: null,
                         state: BAD_CREDENTIALS
