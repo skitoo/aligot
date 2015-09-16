@@ -60,7 +60,9 @@
     "gulp-watch": "^4.2.4",
     "jquery": "^2.1.4",
     "react": "^0.13.3",
+    "react-redux": "^2.1.2",
     "react-router": "^0.13.3",
+    "redux": "^3.0.0",
     "require-dot-file": "^0.4.0",
     "semantic-ui": "^1.12.3",
     "superagent": "^1.2.0"
