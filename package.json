@@ -36,7 +36,6 @@
     "better-console": "^0.2.4",
     "del": "^1.2.0",
     "extend": "^2.0.1",
-    "flummox": "^4.0.0-alpha2",
     "gulp": "^3.8.11",
     "gulp-autoprefixer": "^2.3.0",
     "gulp-chmod": "^1.2.0",
