@@ -18,10 +18,3 @@ web:
     DB_USER: postgres
     DB_HOST: db
     DB_PORT: 5432
-
-
-webpack:
-  build: .
-  command: npm run watch
-  volumes:
-    - .:/aligot

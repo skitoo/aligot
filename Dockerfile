@@ -3,16 +3,13 @@ MAINTAINER Alexis Couronne <http://www.skitoo.net>
 
 
 RUN apt-get -y update
-RUN apt-get install -y python python-pip nodejs npm
-RUN apt-get install -y libpq-dev python-dev
-RUN apt-get install -y nodejs-legacy
+RUN apt-get install -y python python-pip libpq-dev python-dev
 
 ADD . /aligot
 WORKDIR /aligot
 
 RUN pip install -r requirements.txt
 RUN pip install pytest
-RUN npm install
 
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE aligot.settings

@@ -1,6 +1,4 @@
-from django.conf import settings
 from django.conf.urls import include, patterns, url
-from django.conf.urls.static import static
 from django.contrib import admin
 from rest_framework.authtoken import views
 
@@ -8,9 +6,6 @@ from .views import api
 
 urlpatterns = patterns(
     '',
-    url(r'^$', 'aligot.views.html.index', name='index'),
-    url(r'^(?P<page>login|register|notes|notebooks)$', 'aligot.views.html.index', name='html_views'),
-
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^api/token-auth/', views.obtain_auth_token),
@@ -27,4 +22,4 @@ urlpatterns = patterns(
     url(r'^api/revisions/$', api.NoteRevisionList.as_view(), name='revision-list'),
     url(r'^api/revision/(?P<pk>[^/]+)/$', api.NoteRevisionDetail.as_view(), name='revision-detail'),
 
-) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+)
